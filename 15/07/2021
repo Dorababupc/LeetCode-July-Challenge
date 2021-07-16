@@ -1,4 +1,19 @@
 //Valid Triangle Pair
+/*
+Method1:
+Find all the subsets of the array elements and then select the 3 sized subsets and further check for trianle property.
+There are two methods of doing it.
+1.Through bit masking 
+2.Through backtracing and recursion.
+Both of them take n(2^n) time.
+
+
+Method2:
+Use the three looops which can be done in )(n^3) time.
+
+
+Method3:
+using the three pointer approach.
 class Solution {
 public:
   

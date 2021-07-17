@@ -1,0 +1,62 @@
+/*
+problem:Find the unique quadraplets that sum up to reach the given target.
+Method1:
+We can use the four loops to find the pairs.
+We have to use some set to select only the unique pairs.
+time:O(n^4).
+Method2:
+We can use the two pointer approach to extend it to three and then four.
+Time:O(n^3).
+*/
+class Solution {
+public:
+        vector<vector<int>> twoSum(int start,int end,int target,vector<int> nums){
+        vector<vector<int>> main;
+        while(start<end){
+        if(nums[start]+nums[end]>target){
+                end--;
+            }
+        else if(nums[start]+nums[end]<target){
+                start++;
+            }
+           else{
+                main.push_back({nums[start],nums[end]});
+               while(start<end && (nums[start]==nums[start+1])){
+                   start++;
+               }
+               while(start<end && nums[end]==nums[end-1]){
+                   end--;
+               }
+               start++;
+               end--;
+           } 
+        }
+        return main;
+    }
+    vector<vector<int>> kthSum(vector<int>& nums,int start,int target,int k) {
+        if(k==2){
+            return twoSum(start,nums.size()-1,target,nums);
+        }
+        vector<vector<int>> main;
+        int n=nums.size();
+        for(int i=start;i<n-k+1;++i){
+            vector<vector<int>> temp=kthSum(nums,i+1,(target-nums[i]), k-1);
+            if(temp.size()!=0){
+               for(int j=0;j<temp.size();++j){
+                   temp[j].push_back(nums[i]);
+               }
+               for(auto x:temp){
+                   main.push_back(x);
+               }
+            }
+            while(i<n-k+1 &&  nums[i]==nums[i+1]){
+                ++i;
+            }
+        }
+        return main;
+    }
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        sort(nums.begin(),nums.end());
+        return  kthSum(nums,0,target,4);
+    }
+};

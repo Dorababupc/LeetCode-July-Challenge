@@ -1,0 +1,50 @@
+/*
+Recursive reverse of linkedlist in groups of size K.
+Method1:
+iterative -This takes time of O(n) and space of O(1).
+Method2:
+recursive -This takes time of O(n) and space of O(n/k).
+*/
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        int sum=0;
+        ListNode* temp=head;
+        while(temp){
+            sum++;
+            temp=temp->next;
+        }
+        int val=sum/k;
+        ListNode* lastHead=NULL;
+        ListNode* mainHead=NULL;
+        bool first=true;
+        int it=0;
+        while(head){
+            ListNode* prev=NULL;
+            ListNode* next=NULL;
+            int count=0;
+            ListNode* presHead=head;
+            while(head && count<k){
+               count++;
+               next=head->next;
+               head->next=prev;
+               prev=head;
+               head=next;
+            }
+            it++;
+            if(first){
+                mainHead=prev;
+                first=false;
+            }
+            else{
+                lastHead->next=prev;
+            }
+         lastHead=presHead;
+            if(it==val){
+                presHead->next=head;
+                return mainHead;
+            }
+        }
+        return mainHead;
+    }
+};

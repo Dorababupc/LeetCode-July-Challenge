@@ -1,0 +1,47 @@
+/*
+1.Count the number of ones and if they are divisible by 3,then there may be a chance of exisitense but if not then definitely not possible.
+2.If total number of ones is 0,then we can retur any.
+3.Find the indices of the starting points of all the three parts.
+This can be done by taking three pointers and pointing them to 1,k+1,2k+1 ones where k is the number of ones per each part.(k=total/3).
+Now check the order of 1s and 0s in each part with the third pointer to the end.
+*/
+vector<int> threeEqualParts(vector<int>& arr) {
+        int countOnes=0;
+        for(auto x:arr){
+            if(x==1)
+                countOnes++;
+        }
+        int n=arr.size()-1;
+        if(countOnes==0)
+            return {0,n};
+        int onesineachPart=countOnes/3;
+        if(countOnes%3!=0)
+            return {-1,-1};
+        int one=-1;
+        int sec=-1;
+        int th=-1;
+        int curr=0;
+        for(int i=0;i<arr.size();++i){
+            if(arr[i]==1){
+                curr++;
+            if(curr==1){
+                one=i;
+            }
+            else if(curr==(onesineachPart+1)){
+                sec=i;
+            }
+            else if(curr==(2*onesineachPart+1)){
+                th=i;
+            }
+         }
+        }
+        while(th<arr.size()){
+            if(arr[th]!=arr[one] || arr[one]!=arr[sec] || arr[sec]!=arr[th])
+                return {-1,-1};
+            th++;
+            one++;
+            sec++;
+        }
+        return {one-1,sec};
+        
+    }

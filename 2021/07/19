@@ -1,0 +1,33 @@
+/*
+Lowest common ancestor.
+Method1:
+
+Which requires two traversals of the tree and stores the two traversal paths and then compare the node where they become uneual and returns the 
+previous node ,which will be the common one.
+In this method it also checks if both the given nodes are present or not.
+
+Method2:
+In this method we start with the assumption that both the nodes of the tree that are given are present.
+idea:
+Every node in the tree has four cases:
+!.The node value is equal to the given values a/b.-return root.
+2.The nodes left child contains one and the right one contains ones-return root.
+3.The node's one of the child contaions both a,b.-return return that child.
+4.The node does not contain any a/b-return NULL
+   
+ */
+ 
+ 
+  TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(!root)
+            return NULL;
+        if(root->val==p->val || root->val==q->val)
+            return root;
+        TreeNode* lca1=lowestCommonAncestor(root->left,p,q);
+        TreeNode* lca2=lowestCommonAncestor(root->right,p,q);
+        if(lca1 && lca2)
+            return root;
+        if(lca1)
+            return lca1;
+            return lca2;
+    }
